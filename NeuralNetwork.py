@@ -12,7 +12,7 @@ from initializers import xavier, he
 
 # defining a neural network
 class NeuralNetwork:
-    '''To create a NeuralNetwork object you need features X, Label y and the number of neurons in each hidden layer.'''
+    '''To create a NeuralNetwork object you need to specify the features X, the Label y and the number of neurons in each hidden layer.'''
 
 
     def __init__(self, X, y, layers_length, activation='Relu', objective='regression'):
