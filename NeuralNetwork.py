@@ -73,13 +73,13 @@ class NeuralNetwork:
             self.layers.append(layer)
             self.zs.append(z)
         self.z_last = np.dot(self.layers[-1], self.last_weights)
-        self.output = self.z_last if self.objective == 'regression' else activation(self.z_last)
+        self.output = self.z_last if self.objective == 'regression' else sigmoid(self.z_last)
         return self.output
     
 
     def __backprop(self):
         derivative = self.__activation_func()[1]
-        delta_last = 2 * (self.y - self.output) if self.objective == 'regression' else derivative(2 * (self.y - self.output))
+        delta_last = 2 * (self.y - self.output) if self.objective == 'regression' else sigmoid_derivative(2 * (self.y - self.output))
         d_last_weights = np.dot(self.layers[-1].T, delta_last)
         
         deltas = [delta_last]
@@ -124,7 +124,7 @@ class NeuralNetwork:
         
 
     def predict(self):
-        return self.__feedforward()
+        return self.__feedforward() if self.objective == 'regression' else np.array([int(np.round(i)) for i in self.__feedforward().flatten])
         
 
     def summary(self):
